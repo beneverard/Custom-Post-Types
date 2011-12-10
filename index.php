@@ -1,0 +1,34 @@
+<?php get_header(); ?>
+
+	<?php if (have_posts()) : ?>
+	<?php while (have_posts()) : the_post(); ?>
+		<article <?php post_class() ?> id="post-<?php the_ID(); ?>">
+			<h1><a href="<?php the_permalink() ?>" rel="bookmark" title="Permanent Link to <?php the_title_attribute(); ?>"><?php the_title(); ?></a></h1>
+			<time datetime="<?php the_time('Y-m-d') ?>" pubdate><?php the_time('F jS, Y') ?></time> <!-- by <?php the_author() ?> -->
+			<?php if (has_post_thumbnail()) { ?>
+		        <a href="<?php the_permalink() ?>">
+		            <?php
+                	    $src = wp_get_attachment_image_src(get_post_thumbnail_id($post->ID), array(2000, 2000), false, '' );
+                        echo '<img style="top: 0px; right: 0px;" class="postThumb" src="'. get_bloginfo("template_url") .'/timthumb.php?src='. $src[0] .'&w=620&q=90&a=t&zc=1" />';
+                    ?>
+                </a>
+            <?php } ?>
+			<?php the_content('Read the rest of this entry &raquo;'); ?>
+			<?php comments_popup_link('No Comments &#187;', '1 Comment &#187;', '% Comments &#187;'); ?>
+		</article>
+	<?php endwhile; ?>
+	
+	<?php if (show_posts_nav()) : ?>
+		<nav class="nextPrevLinks">
+			<?php my_paginate_links(); ?>
+		</nav>
+	<?php endif; ?>
+	
+	<?php else : ?>
+		<h2>Not Found</h2>
+		<p>Sorry, but you are looking for something that isn't here.</p>
+		<?php get_search_form(); ?>
+	<?php endif; ?>
+
+<?php get_sidebar(); ?>
+<?php get_footer(); ?>
