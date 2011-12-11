@@ -58,3 +58,12 @@
     
     // Support menus
     add_theme_support('menus');
+    
+    
+     //**************************
+    // INCLUDE CUSTOM POST TYPES
+    
+	require_once('functions/custom_post_type_event.php');
+
+
+// end of functions.php
