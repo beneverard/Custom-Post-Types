@@ -27,16 +27,18 @@
 	<div class="wrapper">
 	    		
 	<header>
-	    <a class="logo" href="<?php bloginfo('home'); ?>/"><?php bloginfo('name'); ?></a>
+	    <h1><a class="logo" href="<?php bloginfo('home'); ?>/"><?php bloginfo('name'); ?></a></h1>
 		<nav>
 			<ul>
-				<?php wp_nav_menu(array(
-				    'sort_column' => 'menu_order',
-				    'container_class' => 'menu-header',
-				    'menu' => 'Header',
-				    'container' => '',
-				    'items_wrap' => '%3$s'
-				)); ?>
+				<?php 
+					wp_nav_menu(array(
+					    'sort_column'		=> 'menu_order',
+					    'container_class'	=> 'menu-header',
+					    'menu'				=> 'Header',
+					    'container'			=> '',
+					    'items_wrap'		=> '%3$s'
+					)); 
+				?>
 			</ul>
 		</nav>
 	</header>
