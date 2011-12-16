@@ -14,7 +14,16 @@
 		
 <?php if ($the_query->have_posts()) while ($the_query->have_posts()) : $the_query->the_post(); ?>
 
+	<?php $custom = get_post_custom(); ?>
+	
 	<h2><a href="<?php the_permalink(); ?>"><?php the_title(); ?></a></h2>
+	
+	<?php if (!empty($custom['td_event_location'][0])) : ?>
+		
+		<p><strong>Location: <?php echo $custom['td_event_location'][0]; ?></strong></p>
+		
+	<?php endif; ?>
+	
 	<?php the_excerpt(); ?>
 	
 <?php endwhile; ?>

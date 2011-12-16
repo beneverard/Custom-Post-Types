@@ -8,7 +8,16 @@
 			
 				<article <?php post_class() ?> id="post-<?php the_ID(); ?>">
 				
+					<?php $custom = get_post_custom(); ?>
+				
 					<h2><?php the_title(); ?></h2>
+					
+					<?php if (!empty($custom['td_event_location'][0])) : ?>
+						
+						<p><strong>Location: <?php echo $custom['td_event_location'][0]; ?></strong></p>
+						
+					<?php endif; ?>
+					
 					<?php the_content(); ?>
 					
 				</article>
