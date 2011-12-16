@@ -31,12 +31,91 @@ function td_create_custom_post_type_event()
 		'public'		=> TRUE,
 		'publicly_queryable'	=> TRUE,
 		'show_ui'		=> TRUE,
-		'rewrite'		=> array('with_front' => false, 'slug' => 'events')
+		'rewrite'		=> array('with_front' => false, 'slug' => 'events'),
+		'register_meta_box_cb'	=> 'td_register_meta_box'
 	);
 
 	// register the post type along with it's arguments
 	register_post_type('event', $args);
 	
 }
+
+function td_register_meta_box()
+{
+	add_meta_box('event_options', 'Event Options', 'td_event_options', 'event', 'normal', 'high');
+}
+
+function td_event_options()
+{
+
+	global $post;
+	$custom = get_post_custom($post->ID);
+	
+	echo '<input type="hidden" name="td_noncename" id="ss_noncename" value="' . wp_create_nonce('td_event_noncename') . '" />';
+	
+?>
+	
+	<div id="td_event_options_table_container1" style="margin: 15px 0 0 0;">
+
+		<table id="td_event_options_table1" width="100%" cellspacing="5px">
+			<tr valign="top">
+				<td style="width: 20%;"><label for="td_event_location">Location: </label></td>
+				<td>
+					<input type="text" name="td_event_location" id="td_event_location" value="<?php echo $custom['td_event_location'][0]; ?>" />
+				</td>
+			</tr>
+		</table>
+	</div>
+		
+<?php
+
+}
+
+function td_event_options_save_postdata($post_ID) {
+	
+	// check to ensure dealing with the event post type
+	if (get_post_type($post_ID) != "event")
+	{
+		return $post_id;
+	}
+	
+	// check the nonce string matches the one we set earlier
+	if (!wp_verify_nonce($_POST['td_noncename'], 'td_event_noncename'))
+	{
+		return $post_id;
+	}
+
+	// if request is an autosave don't save meta data
+	if (defined('DOING_AUTOSAVE') && DOING_AUTOSAVE)
+	{
+		return $post_id;
+	}
+	
+	// Check permissions
+	if ('page' == $_POST['post_type'])
+	{
+	
+		if (!current_user_can('edit_page', $post_id ))
+		{
+			return $post_id;
+		}
+		
+	} 
+	else
+	{
+		
+		if (!current_user_can('edit_post', $post_id ))
+		{
+			return $post_id;
+		}
+		
+	}
+	
+	// save data
+	update_post_meta($post_ID, "td_event_location", $_POST['td_event_location']);
+	
+}
+
+add_action('save_post', 'td_event_options_save_postdata');
 
 // end of custom_post_type_event.php
