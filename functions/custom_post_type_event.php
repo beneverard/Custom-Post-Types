@@ -33,7 +33,8 @@ function td_create_custom_post_type_event()
 		'show_ui'		=> TRUE,
 		'rewrite'		=> array('with_front' => false, 'slug' => 'events'),
 		'register_meta_box_cb'	=> 'td_register_meta_box',
-		'menu_position'		=> 100
+		'menu_position'		=> 100,
+		'menu_icon'		=> get_bloginfo('template_url') . '/admin/event_icon.png'
 	);
 
 	// register the post type along with it's arguments
