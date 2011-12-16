@@ -30,7 +30,8 @@ function td_create_custom_post_type_event()
 		),
 		'public'		=> TRUE,
 		'publicly_queryable'	=> TRUE,
-		'show_ui'		=> TRUE
+		'show_ui'		=> TRUE,
+		'rewrite'		=> array('with_front' => false, 'slug' => 'events')
 	);
 
 	// register the post type along with it's arguments
